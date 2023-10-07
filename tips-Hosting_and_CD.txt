@@ -1,0 +1,68 @@
+■Command line login(logout)
+$firebase login(logout)
+
+■Hosting react page to Firebase(in PJ folder)
+$firebase init
+ ->hosting(Configure files for Firebase~) ->existing PJ ->firebase-recipes ->build
+ ->single page?yes ->with github?no
+
+$npm run build
+$firebase deploy
+
+■Add Firebase packege to PJ
+①
+$npm install firebase
+
+②
+In PJ console, click </>, input PJ name "firebase-recipes"
+Then click "add app" button.
+
+Copy firebaseConfig showed up to your react code.
+(In this tutorial, pasete target is .env file and the ":" is replaced with "=".
+Do not forget add .env to your .gitignore!!!
+And its refered by FirebaseConfig.js)
+
+
+■(planA)Github repository(gutiriman3~/r~) and Automatic Deploy setting
+※This is option when you are using github and for automated deploy
+
+url=>https://github.com/gutiriman/firebase-recipes-web-app
+
+①add remote origin(remote url is obtained from above site) and push to github
+ $git init
+ $git git commit -m "first commit"
+ $git git remote add origin https://github.com/gutiriman/firebase-recipes-web-app.git
+ $git push -u origin main
+
+②setup firebase github actions for automatic deployment(CD)
+ $firebase init -> Hosting(St up GitHub) -> GitHub Page will popup and click "Authriz"
+ ->which repository? gutiriman/firebase-recipes-web-app
+ ->set up the workflow? No ->set up automatic deployment? Yes
+ ->what is the name of? main
+
+ Then, the .github\workflows folder is created
+ Add below to steps in ".yml" 2 files
+  - run: npm install
+  - run: npm run build
+
+ $git add .
+ $git commit -m "added CD"
+ $git push
+
+ Then you can see Action tab in github pj the build and deploy run automatically
+ for every "git push". This is Continuous Deployment with Github!!(CD)
+
+■(planB)Manual Deploy Setting(without github)
+ add below to script of "package.json" 
+ ・"buildDeploy":"npm run build && firebase deploy --only hosting"
+
+ $npm run buildDeploy
+
+
+<お名前.com>
+ID:55527029
+PW:r~
+
+ (not using)
+ ID:9313139
+ PW:r~
